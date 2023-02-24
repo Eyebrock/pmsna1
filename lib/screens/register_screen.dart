@@ -12,6 +12,7 @@ class Registerscreen extends StatefulWidget {
 }
 
 class _RegisterscreenState extends State<Registerscreen> {
+  
   File? _image;
 
   // This is the image picker

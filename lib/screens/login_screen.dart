@@ -83,6 +83,23 @@ class _LoginScreenState extends State<LoginScreen> {
     return buttonlogging;
   }
 
+  SocialLoginButton btnonboard(BuildContext context) {
+    final buttonlogging = SocialLoginButton(
+      buttonType: SocialLoginButtonType.generalLogin,
+      text: 'Conocenos mas',
+      onPressed: () {
+        isLoadibg = true;
+        setState(() {});
+        Future.delayed(Duration(milliseconds: 2000)).then((value) {
+          isLoadibg = false;
+          setState(() {});
+          Navigator.pushNamed(context, '/Onb');
+        });
+      },
+    );
+    return buttonlogging;
+  }
+
   Padding botonregistro(BuildContext context) {
     final txtregister = Padding(
       padding: const EdgeInsets.symmetric(vertical: 20),
@@ -117,6 +134,8 @@ class _LoginScreenState extends State<LoginScreen> {
         googlebtn,
         horizontalSpace,
         botonregistro(context),
+        horizontalSpace,
+        btnonboard(context),
         horizontalSpace,
         horizontalSpace,
       ],
@@ -162,6 +181,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontalSpace,
                   botonregistro(context),
                   horizontalSpace,
+                  btnonboard(context),
+                  horizontalSpace
                 ],
               ),
             )

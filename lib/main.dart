@@ -4,7 +4,7 @@ import 'package:pmsna1/routes.dart';
 import 'package:pmsna1/screens/login_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp( MyApp());
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => ThemeProvider(context)
-          ),
+        ChangeNotifierProvider(create: (_) => ThemeProvider(context)),
       ],
       child: PMSNApp(),
     );
@@ -31,7 +29,8 @@ class PMSNApp extends StatelessWidget {
     return MaterialApp(
       theme: theme.getthemeData(),
       routes: getApplicationRoutes(),
-      home: LoginScreen(), 
+      home: LoginScreen(),
     );
   }
-  }
+}
+

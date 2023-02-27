@@ -26,7 +26,13 @@ class _ListPostState extends State<ListPost> {
       future: database!.GETALLPOST(),
       builder: (context, AsyncSnapshot<List<PostModel>> snapshot) {
         if( snapshot.hasData){
-          return Container();
+          return ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              var objPostModel = snapshot.data![index];
+              return Container();
+            },
+          );
         }else if(snapshot.hasError){
           return const Center(child: Text('Ocurrio un error'),);
         }else{

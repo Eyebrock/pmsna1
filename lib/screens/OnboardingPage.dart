@@ -1,4 +1,4 @@
-import 'package:pmsna1/screens/login_screen.dart';
+import 'package:pmsna1/main.dart';
 import 'package:pmsna1/widgets/card_planet.dart';
 import 'package:concentric_transition/concentric_transition.dart';
 import 'package:flutter/material.dart';
@@ -9,28 +9,46 @@ class OnboardingPage extends StatelessWidget {
 
   final data = [
     CardPlanetData(
-      title: "observe",
+      title: "Ingenieria en sistemas computacionales",
       subtitle:
-          "The night sky has much to offer to those who seek its mystery.",
-      image: const AssetImage("assets/images/img-1.png"),
+          "El y la Ingeniero/a en Sistemas Computacionales, tiene conocimientos de alto nivel tecnológico y científico para ser un profesionista con visión innovadora capaz de crear y proveer soluciones de software e infraestructura computacional de vanguardia en la nueva y dinámica sociedad dela era digital.",
+      image: const AssetImage("assets/images/img-5.png"),
       backgroundColor: const Color.fromRGBO(0, 10, 56, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,
       background: LottieBuilder.asset("assets/animation/bg-1.json"),
     ),
     CardPlanetData(
-      title: "imagine",
-      subtitle: "An endless number of galaxies means endless possibilities.",
-      image: const AssetImage("assets/images/img-2.png"),
+      title: "Perfil de Ingreso",
+      subtitle: "El y la estudiante al ingresar, deberá tener habilidades matemáticas y lógicas, capacidad de análisis y síntesis de información, habilidades de investigación, así como interés por la computación y la programación, disposición para trabajar en equipo y sentido de compromiso social.",
+      image: const AssetImage("assets/images/img-6.png"),
       backgroundColor: Colors.white,
       titleColor: Colors.purple,
       subtitleColor: const Color.fromRGBO(0, 10, 56, 1),
       background: LottieBuilder.asset("assets/animation/bg-2.json"),
     ),
     CardPlanetData(
-      title: "stargaze",
-      subtitle: "The sky dome is a beautiful graveyard of stars.",
-      image: const AssetImage("assets/images/img-3.png"),
+      title: "Residencias Profesionales",
+      subtitle: "A partir del 80% de créditos podrá realizar residencias profesionales, en donde pondrá en práctica sus conocimientos adquiridos en organizaciones gubernamentales, privadas, así como en la industria de software.",
+      image: const AssetImage("assets/images/img-7.png"),
+      backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
+      titleColor: Colors.yellow,
+      subtitleColor: Colors.white,
+      background: LottieBuilder.asset("assets/animation/bg-3.json"),
+    ),
+    CardPlanetData(
+      title: "Al egresar",
+      subtitle: "El y la Ingeniero/a en Sistemas Computacionales cuenta un amplio campo de trabajo, dado quela industrial del software requiere profesionistas creativos con capacidades para desarrollar sistemas, diseñar y administrar redes de computadoras, diseño de sitios web, tecnologías móviles, internet, videojuegos y seguridad de información tanto en el sector público, privado o como consultor/a especializado.",
+      image: const AssetImage("assets/images/img-8.png"),
+      backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
+      titleColor: Colors.yellow,
+      subtitleColor: Colors.white,
+      background: LottieBuilder.asset("assets/animation/bg-3.json"),
+    ),
+    CardPlanetData(
+      title: "Modulos de Especialidad",
+      subtitle: "Tecnologias emergentes para la toma de decisiones & Gestion de datos y tecnologias e informacion",
+      image: const AssetImage("assets/images/img-9.png"),
       backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
       titleColor: Colors.yellow,
       subtitleColor: Colors.white,
@@ -50,7 +68,7 @@ class OnboardingPage extends StatelessWidget {
         onFinish: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) =>  const LoginScreen()),
+            MaterialPageRoute(builder: (context) =>  const PMSNApp()),
           );
         },
       ),

@@ -7,6 +7,6 @@ Map<String, WidgetBuilder> getApplicationRoutes(){
   return <String, WidgetBuilder>{
     '/register': (BuildContext context) =>  const Registerscreen(),
     '/dash' :(BuildContext context) =>  DashboardScreen(),
-    '/Onb' :(BuildContext context) =>  MyApp(),
+    '/Onb' :(BuildContext context) =>  const MyApp(),
   };
 }

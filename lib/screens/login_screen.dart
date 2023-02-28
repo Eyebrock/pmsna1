@@ -88,13 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
       buttonType: SocialLoginButtonType.generalLogin,
       text: 'Conocenos mas',
       onPressed: () {
-        isLoadibg = true;
-        setState(() {});
-        Future.delayed(Duration(milliseconds: 2000)).then((value) {
-          isLoadibg = false;
-          setState(() {});
-          Navigator.pushNamed(context, '/Onb');
-        });
+        Navigator.pushNamed(context, '/Onb');
       },
     );
     return buttonlogging;

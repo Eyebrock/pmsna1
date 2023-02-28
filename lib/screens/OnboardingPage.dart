@@ -11,8 +11,8 @@ class OnboardingPage extends StatelessWidget {
     CardPlanetData(
       title: "Ingenieria en sistemas computacionales",
       subtitle:
-          "El y la Ingeniero/a en Sistemas Computacionales, tiene conocimientos de alto nivel tecnológico y científico para ser un profesionista con visión innovadora capaz de crear y proveer soluciones de software e infraestructura computacional de vanguardia en la nueva y dinámica sociedad dela era digital.",
-      image: const AssetImage("assets/images/img-5.png"),
+          "",
+      image: const AssetImage("assets/logoitc.png"),
       backgroundColor: const Color.fromRGBO(0, 10, 56, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,
@@ -20,7 +20,7 @@ class OnboardingPage extends StatelessWidget {
     ),
     CardPlanetData(
       title: "Perfil de Ingreso",
-      subtitle: "El y la estudiante al ingresar, deberá tener habilidades matemáticas y lógicas, capacidad de análisis y síntesis de información, habilidades de investigación, así como interés por la computación y la programación, disposición para trabajar en equipo y sentido de compromiso social.",
+      subtitle: "",
       image: const AssetImage("assets/images/img-6.png"),
       backgroundColor: Colors.white,
       titleColor: Colors.purple,
@@ -29,7 +29,7 @@ class OnboardingPage extends StatelessWidget {
     ),
     CardPlanetData(
       title: "Residencias Profesionales",
-      subtitle: "A partir del 80% de créditos podrá realizar residencias profesionales, en donde pondrá en práctica sus conocimientos adquiridos en organizaciones gubernamentales, privadas, así como en la industria de software.",
+      subtitle: "",
       image: const AssetImage("assets/images/img-7.png"),
       backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
       titleColor: Colors.yellow,
@@ -38,7 +38,7 @@ class OnboardingPage extends StatelessWidget {
     ),
     CardPlanetData(
       title: "Al egresar",
-      subtitle: "El y la Ingeniero/a en Sistemas Computacionales cuenta un amplio campo de trabajo, dado quela industrial del software requiere profesionistas creativos con capacidades para desarrollar sistemas, diseñar y administrar redes de computadoras, diseño de sitios web, tecnologías móviles, internet, videojuegos y seguridad de información tanto en el sector público, privado o como consultor/a especializado.",
+      subtitle: "",
       image: const AssetImage("assets/images/img-8.png"),
       backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
       titleColor: Colors.yellow,
@@ -47,7 +47,7 @@ class OnboardingPage extends StatelessWidget {
     ),
     CardPlanetData(
       title: "Modulos de Especialidad",
-      subtitle: "Tecnologias emergentes para la toma de decisiones & Gestion de datos y tecnologias e informacion",
+      subtitle: "",
       image: const AssetImage("assets/images/img-9.png"),
       backgroundColor: const Color.fromRGBO(71, 59, 117, 1),
       titleColor: Colors.yellow,

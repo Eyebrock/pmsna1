@@ -12,7 +12,7 @@ class OnboardingPage extends StatelessWidget {
       title: "Ingenieria en sistemas computacionales",
       subtitle:
           "",
-      image: const AssetImage("assets/logoitc.png"),
+      image: const AssetImage("assets/plan.jpg"),
       backgroundColor: const Color.fromRGBO(0, 10, 56, 1),
       titleColor: Colors.pink,
       subtitleColor: Colors.white,

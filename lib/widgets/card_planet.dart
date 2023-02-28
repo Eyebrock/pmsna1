@@ -62,7 +62,7 @@ class CardPlanet extends StatelessWidget {
                   fontSize: 16,
                 ),
                 textAlign: TextAlign.center,
-                maxLines: 2,
+                maxLines: 15,
               ),
               const Spacer(flex: 10),
             ],

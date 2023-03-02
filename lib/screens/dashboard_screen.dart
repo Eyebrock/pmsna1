@@ -43,8 +43,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 isDarkModeEnabled: isDarkModeEnabled,
                 onStateChanged: (isDarkModeEnabled){
                   isDarkModeEnabled
-                  ? theme.setthemeData(StylesSettings.darkTheme(context))
-                  : theme.setthemeData(StylesSettings.lightTheme(context));
+                  ? theme.setthemeData(1,context)
+                  : theme.setthemeData(0,context);
                   this.isDarkModeEnabled=isDarkModeEnabled;
                   setState(() {});
                 },

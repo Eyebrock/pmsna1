@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pmsna1/responsive.dart';
 import 'package:pmsna1/widgets/loading_modal_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
+import 'package:pmsna1/provider/theme_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,8 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final imageLogo = Image.asset(
     'assets/pepefalcon.jpg',
-    height: 300
-    ,
+    height: 130,
   );
 
   @override
@@ -57,8 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Responsive(
+                  tablet: _buildhorizontalContent(),
                   mobile: _buildMobileContent(),
                   desktop: _buildDesktopContent()),
+                  
             ),
           ),
           isLoadibg ? const LoadingModalWidget() : Container()
@@ -83,6 +86,19 @@ class _LoginScreenState extends State<LoginScreen> {
     return buttonlogging;
   }
 
+  FloatingActionButton btnthemech(BuildContext context) {
+    final themechange = 
+    FloatingActionButton.extended(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        onPressed: ()=> Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const NewScreen())),
+        label: Text('Theme Settings'),
+        heroTag: 'GFG tag',
+      );
+    return themechange;
+  }
+
   SocialLoginButton btnonboard(BuildContext context) {
     final buttonlogging = SocialLoginButton(
       buttonType: SocialLoginButtonType.generalLogin,
@@ -96,14 +112,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Padding botonregistro(BuildContext context) {
     final txtregister = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: TextButton(
         onPressed: () {
           Navigator.pushNamed(context, '/register');
         },
         child: Text(
           'crear una cuenta',
-          style: TextStyle(fontSize: 20, decoration: TextDecoration.underline),
+          style: TextStyle(fontSize: 18, decoration: TextDecoration.underline),
         ),
       ),
     );
@@ -118,7 +134,6 @@ class _LoginScreenState extends State<LoginScreen> {
           child: imageLogo,
         ),
         horizontalSpace,
-        horizontalSpace,
         txtEmail,
         horizontalSpace,
         txtPass,
@@ -127,11 +142,11 @@ class _LoginScreenState extends State<LoginScreen> {
         horizontalSpace,
         googlebtn,
         horizontalSpace,
-        botonregistro(context),
-        horizontalSpace,
         btnonboard(context),
         horizontalSpace,
+        botonregistro(context),
         horizontalSpace,
+        btnthemech(context)
       ],
     );
   }
@@ -142,9 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            imageLogo
-          ],
+          children: [imageLogo],
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -176,12 +189,138 @@ class _LoginScreenState extends State<LoginScreen> {
                   botonregistro(context),
                   horizontalSpace,
                   btnonboard(context),
-                  horizontalSpace
+                  horizontalSpace,
+                  btnthemech(context)
                 ],
               ),
             )
           ],
         ),
+      ],
+    );
+  }
+
+  Widget _buildhorizontalContent() {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  imageLogo,
+                  horizontalSpace,
+                  txtEmail,
+                  horizontalSpace,
+                  txtPass,
+                  horizontalSpace,
+                  googlebtn,
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  horizontalSpace,
+                  botonlogin(context),
+                  horizontalSpace,
+                  btnonboard(context),
+                  horizontalSpace,
+                  btnthemech(context),
+                  horizontalSpace,
+                  botonregistro(context),
+                ],
+              ),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class NewScreen extends StatefulWidget {
+  const NewScreen({Key? key}) : super(key: key);
+
+  @override
+  State<NewScreen> createState() => _NewScreenState();
+}
+
+class _NewScreenState extends State<NewScreen> {
+  TextEditingController textEditingController = TextEditingController();
+  
+
+  ElevatedButton btnlight(BuildContext context) {
+    final themechange = ElevatedButton.icon(
+      onPressed: () {
+        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        theme.setthemeData(0, context);
+      },
+      icon: const Icon(Icons.settings),
+      label: const Text('Theme Light'),
+    );
+    return themechange;
+  }
+
+  ElevatedButton btndark(BuildContext context) {
+    final themechange = ElevatedButton.icon(
+      onPressed: () {
+        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        theme.setthemeData(1, context);
+      },
+      icon: const Icon(Icons.settings),
+      label: const Text('Theme Dark'),
+    );
+    return themechange;
+  }
+
+  ElevatedButton btncustom(BuildContext context) {
+    final themechange = ElevatedButton.icon(
+      onPressed: () {
+        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        theme.setthemeData(2, context);
+      },
+      icon: const Icon(Icons.settings),
+      label: const Text('Theme Custom'),
+    );
+    return themechange;
+  }
+
+  final horizontalSpace = SizedBox(
+    height: 10,
+  );
+
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text('Theme Selector'),
+      ),
+      body: Center(
+        child: Hero(tag: 'GFG Tag', child: _buildthememenu()),
+      ),
+    );
+  }
+
+  Widget _buildthememenu() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        horizontalSpace,
+        btncustom(context),
+        horizontalSpace,
+        btnlight(context),
+        horizontalSpace,
+        btndark(context)
       ],
     );
   }

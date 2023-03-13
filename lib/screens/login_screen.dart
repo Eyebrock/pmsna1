@@ -153,6 +153,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildDesktopContent() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -202,6 +204,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget _buildhorizontalContent() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

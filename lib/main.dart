@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pmsna1/provider/flags_provider.dart';
 import 'package:pmsna1/provider/theme_provider.dart';
 import 'package:pmsna1/routes.dart';
 import 'package:pmsna1/screens/login_screen.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider(context, idtema)),
+        ChangeNotifierProvider(create: (_) => FlagosProvider())
       ],
       child: PMSNApp(),
     );

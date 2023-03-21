@@ -15,6 +15,8 @@ class ItemPostWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+     
+
     final avatar = const CircleAvatar(
       backgroundImage: AssetImage('assets/logoitc.png'),
     );
@@ -22,7 +24,7 @@ class ItemPostWidget extends StatelessWidget {
     final txtuser = const Text('Eyebrock');
     final datePost = const Text('fecha-de-hoy');
     final imgPost = const Image(image: AssetImage('assets/logoitc.png'), height: 100,);
-    final txtDesc = const Text('bien harto teszzzzzzto');
+    final txtDesc =  Text(objPostModel!.dscPost!);
     final iconRate = const Icon(Icons.rate_review_rounded);
 
     FlagosProvider falg = Provider.of<FlagosProvider>(context);
@@ -55,7 +57,10 @@ class ItemPostWidget extends StatelessWidget {
             children: [
               iconRate,
               Expanded(child: Container()),
-              IconButton(onPressed: (){}, icon: const Icon(Icons.edit)),
+              IconButton(onPressed: (){
+                Navigator.pushNamed(context, '/add', arguments: objPostModel);
+
+              }, icon: const Icon(Icons.edit)),
               IconButton(onPressed: (){
 
                 showDialog(context: context,

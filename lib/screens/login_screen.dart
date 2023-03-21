@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:pmsna1/responsive.dart';
 import 'package:pmsna1/widgets/loading_modal_widget.dart';
@@ -35,8 +37,8 @@ class _LoginScreenState extends State<LoginScreen> {
   );
 
   final imageLogo = Image.asset(
-    'assets/pepefalcon.jpg',
-    height: 130,
+    'assets/logoitc.png',
+    height: 200,
   );
 
   @override
@@ -54,14 +56,13 @@ class _LoginScreenState extends State<LoginScreen> {
                 image: DecorationImage(
                     opacity: .5,
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/chunky.jpg'))),
+                    image: AssetImage('assets/green.jpg'))),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Responsive(
                   tablet: _buildhorizontalContent(),
                   mobile: _buildMobileContent(),
                   desktop: _buildDesktopContent()),
-                  
             ),
           ),
           isLoadibg ? const LoadingModalWidget() : Container()
@@ -87,16 +88,26 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   FloatingActionButton btnthemech(BuildContext context) {
-    final themechange = 
-    FloatingActionButton.extended(
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        onPressed: ()=> Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const NewScreen())),
-        label: Text('Theme Settings'),
-        heroTag: 'GFG tag',
-      );
+    final themechange = FloatingActionButton.extended(
+      backgroundColor: Colors.green,
+      foregroundColor: Colors.white,
+      onPressed: () => Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const NewScreen())),
+      label: Text('Theme Settings'),
+      heroTag: 'GFG tag',
+    );
     return themechange;
+  }
+
+  FloatingActionButton btncalendar(BuildContext context) {
+    final calendarview = FloatingActionButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/Calendar');
+      },
+      backgroundColor: Color.fromARGB(255, 2, 47, 84),
+      child: Icon(Icons.calendar_today),
+    );
+    return calendarview;
   }
 
   SocialLoginButton btnonboard(BuildContext context) {
@@ -127,35 +138,65 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildMobileContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FractionallySizedBox(
-          child: imageLogo,
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      Expanded(
+        flex: 0,
+        child: Align(
+          alignment: Alignment.topRight,
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 50),
+            child: btncalendar(context),
+          ),
         ),
-        horizontalSpace,
-        txtEmail,
-        horizontalSpace,
-        txtPass,
-        horizontalSpace,
-        botonlogin(context),
-        horizontalSpace,
-        googlebtn,
-        horizontalSpace,
-        btnonboard(context),
-        horizontalSpace,
-        botonregistro(context),
-        horizontalSpace,
-        btnthemech(context)
-      ],
-    );
-  }
+      ),
+      imageLogo,
+      Expanded(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 10),
+              txtEmail,
+              SizedBox(height: 10),
+              txtPass,
+              SizedBox(height: 10),
+              botonlogin(context),
+              SizedBox(height: 10),
+              googlebtn,
+              SizedBox(height: 10),
+              btnonboard(context),
+              SizedBox(height: 10),
+              botonregistro(context),
+              SizedBox(height: 10),
+              btnthemech(context)
+            ],
+          ),
+        ),
+      )
+    ],
+  );
+}
+
+
 
   Widget _buildDesktopContent() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        Expanded(
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              margin: EdgeInsets.symmetric(vertical: 50),
+              child: btncalendar(context),
+            ),
+          ),
+        ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -203,46 +244,61 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildhorizontalContent() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  imageLogo,
-                  horizontalSpace,
-                  txtEmail,
-                  horizontalSpace,
-                  txtPass,
-                  horizontalSpace,
-                  googlebtn,
-                ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Espacio entre la imagen y los elementos
+              Expanded(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.7,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        horizontalSpace,
+                        horizontalSpace,
+                        horizontalSpace,
+                        horizontalSpace,
+                        horizontalSpace,
+                        horizontalSpace,
+                        txtEmail,
+                        horizontalSpace,
+                        txtPass,
+                        horizontalSpace,
+                        googlebtn,
+                        horizontalSpace,
+                        botonlogin(context),
+                        horizontalSpace,
+                        btnonboard(context),
+                        horizontalSpace,
+                        btnthemech(context),
+                        horizontalSpace,
+                        botonregistro(context),
+                      ],
+                    ),
+                  ),
+                ),
               ),
+            ],
+          ),
+        ),
+        Expanded(
+          child: Align(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                imageLogo,
+                SizedBox(height: 20),
+                SizedBox(height: 20),
+                btncalendar(context),
+              ],
             ),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  horizontalSpace,
-                  botonlogin(context),
-                  horizontalSpace,
-                  btnonboard(context),
-                  horizontalSpace,
-                  btnthemech(context),
-                  horizontalSpace,
-                  botonregistro(context),
-                ],
-              ),
-            )
-          ],
+          ),
         ),
       ],
     );
@@ -258,12 +314,12 @@ class NewScreen extends StatefulWidget {
 
 class _NewScreenState extends State<NewScreen> {
   TextEditingController textEditingController = TextEditingController();
-  
 
   ElevatedButton btnlight(BuildContext context) {
     final themechange = ElevatedButton.icon(
       onPressed: () {
-        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        ThemeProvider theme =
+            Provider.of<ThemeProvider>(context, listen: false);
         theme.setthemeData(0, context);
       },
       icon: const Icon(Icons.settings),
@@ -275,7 +331,8 @@ class _NewScreenState extends State<NewScreen> {
   ElevatedButton btndark(BuildContext context) {
     final themechange = ElevatedButton.icon(
       onPressed: () {
-        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        ThemeProvider theme =
+            Provider.of<ThemeProvider>(context, listen: false);
         theme.setthemeData(1, context);
       },
       icon: const Icon(Icons.settings),
@@ -287,7 +344,8 @@ class _NewScreenState extends State<NewScreen> {
   ElevatedButton btncustom(BuildContext context) {
     final themechange = ElevatedButton.icon(
       onPressed: () {
-        ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
+        ThemeProvider theme =
+            Provider.of<ThemeProvider>(context, listen: false);
         theme.setthemeData(2, context);
       },
       icon: const Icon(Icons.settings),

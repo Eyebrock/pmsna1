@@ -53,6 +53,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 leading: Icon(Icons.settings),
                 trailing: Icon(Icons.chevron_right),
               ),
+              ListTile(
+                onTap: () => Navigator.pushNamed(context, '/popular'),
+                title: Text('API videos'),
+                leading: Icon(Icons.movie),
+                trailing: Icon(Icons.chevron_right),
+              ),
               DayNightSwitcher(
                 isDarkModeEnabled: isDarkModeEnabled,
                 onStateChanged: (isDarkModeEnabled){

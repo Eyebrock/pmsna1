@@ -16,8 +16,8 @@ class ListTasks extends StatefulWidget {
 class _ListTasksState extends State<ListTasks> {
 
   DatabaseHelper? database;
-
-   @override
+  
+  @override
   void initState() {
     super.initState();
     database = DatabaseHelper();
@@ -32,12 +32,15 @@ class _ListTasksState extends State<ListTasks> {
       future: flags.getflagListPost() == true ? database!.GET_ALL_EVENTOS() : database!.GET_ALL_EVENTOS(),
       builder: (context, AsyncSnapshot<List<EventModel>> snapshot) {
         if( snapshot.hasData){
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              var objEventModel = snapshot.data![index];
-              return TaskItemWidget(objEventModel: objEventModel);
-            },
+          return SizedBox(
+            height:600,
+            child: ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  var objEventModel = snapshot.data![index];
+                  return TaskItemWidget(objEventModel: objEventModel);
+                },
+              ),
           );
         }else if(snapshot.hasError){
           return const Center(child: Text('Ocurrio un error'),);

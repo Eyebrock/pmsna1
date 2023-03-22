@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:pmsna1/models/event_model.dart';
 import 'package:pmsna1/screens/list_tasks.dart';
 import 'package:provider/provider.dart';
@@ -87,6 +88,7 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
           ElevatedButton(
             onPressed: () {
               setState(() {
+                _loadAllEvents();
                 _showFirstView = !_showFirstView;
               });
             },
@@ -97,11 +99,15 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
         ],
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            _showFirstView ? _buildFirstView() : _buildSecondView(),
-          ],
+        widthFactor: 1,
+        heightFactor: 1,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              _showFirstView ? _buildFirstView() : _buildSecondView(),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -148,6 +154,7 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
   }
 
   Widget _buildFirstView() {
+    _onSelection(today, today);
     return TableCalendar(
         locale: "en_US",
         rowHeight: 60,
@@ -159,15 +166,11 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
         onDaySelected: _onSelection,
         eventLoader: _getEventsForDay,
         calendarBuilders: CalendarBuilders(
-          markerBuilder: (context, date, events) {
+          markerBuilder: (context, today, events) {
             BoxDecoration? decoration;
             TextStyle? textStyle;
-            int daysDifference = date.difference(DateTime.now()).inDays;
-            // print(daysDifference);
-            // print(date);
+            int daysDifference = today.difference(DateTime.now()).inDays;
             if (events.isNotEmpty) {
-              EventModel eventito = events[0] as EventModel;
-              bool? completado = eventito.completado;
               if (daysDifference == 0) {
                 // Event is today
                 decoration = const BoxDecoration(
@@ -195,7 +198,7 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
               height: 22,
               decoration: decoration,
               child: Center(
-                child: Text(events.isNotEmpty ? '${date.day}' : '',
+                child: Text(events.isNotEmpty ? '${today.day}' : '',
                     style: textStyle),
               ),
             );
@@ -206,10 +209,6 @@ class _TwoViewsButtonState extends State<TwoViewsButton> {
   }
 
   Widget _buildSecondView() {
-    return Column(
-      children: [
-        ListTasks()
-      ],
-    );
+    return const ListTasks();
   }
 }

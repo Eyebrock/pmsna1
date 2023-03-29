@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:pmsna1/firebase/email_authentication.dart';
 import 'package:pmsna1/widgets/loading_modal_widget.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,6 +14,11 @@ class Registerscreen extends StatefulWidget {
 }
 
 class _RegisterscreenState extends State<Registerscreen> {
+
+  TextEditingController emailtxt = TextEditingController();
+  TextEditingController passwordtxt = TextEditingController();
+
+  Emailuth? emailauth;
   
   File? _image;
 
@@ -27,7 +34,17 @@ class _RegisterscreenState extends State<Registerscreen> {
     }
   }
 
-  final txtEmail = TextFormField(
+  
+
+  
+
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+
+    final txtEmail = TextFormField(
+      controller: emailtxt,
     keyboardType: TextInputType.emailAddress,
     validator: (value) {
       if (value == null || value.isEmpty) {
@@ -44,7 +61,7 @@ class _RegisterscreenState extends State<Registerscreen> {
     ),
   );
 
-  final txtNombre = TextFormField(
+    final txtNombre = TextFormField(
     validator: (value) {
       if (value == null || value.isEmpty) {
         return 'Por favor Introduce infromacion dentro del campo';
@@ -56,6 +73,7 @@ class _RegisterscreenState extends State<Registerscreen> {
   );
 
   final txtPass = TextFormField(
+    controller: passwordtxt,
     validator: (value) {
       if (value == null || value.isEmpty) {
         return 'Por favor Introduce infromacion dentro del campo';
@@ -69,11 +87,7 @@ class _RegisterscreenState extends State<Registerscreen> {
   final horizontalSpace = SizedBox(
     height: 10,
   );
-
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
+  
     final profile = GestureDetector(
       onTap: _openImagePicker,
       child: CircleAvatar(
@@ -118,6 +132,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
+                             emailauth?.createUserWithEmailAndPassword(email: emailtxt.text, password: passwordtxt.text);
                             // If the form is valid, display a snackbar. In the real world,
                             // you'd often call a server or save the information in a database.
                             ScaffoldMessenger.of(context).showSnackBar(

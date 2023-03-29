@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:pmsna1/firebase/email_authentication.dart';
 import 'package:pmsna1/responsive.dart';
 import 'package:pmsna1/widgets/loading_modal_widget.dart';
 import 'package:provider/provider.dart';
@@ -17,15 +18,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoadibg = false;
 
-  final txtEmail = TextFormField(
-    decoration: const InputDecoration(
-        label: Text("EMAIL USER"), border: OutlineInputBorder()),
-  );
+  Emailuth? emailuth;
 
-  final txtPass = TextFormField(
-    decoration: const InputDecoration(
-        label: Text("Password"), border: OutlineInputBorder()),
-  );
+  TextEditingController emailtxt = TextEditingController();
+  TextEditingController passwordtxt = TextEditingController();
+
+  
+  
 
   final horizontalSpace = SizedBox(
     height: 10,
@@ -77,11 +76,16 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {
         isLoadibg = true;
         setState(() {});
-        Future.delayed(Duration(milliseconds: 4000)).then((value) {
+        //Future.delayed(Duration(milliseconds: 4000)).then((value) {
+          emailuth!.signInWithUserAndPassword(email: emailtxt.text, password: passwordtxt.text).then((value) {
+            if(value!){
+              Navigator.pushNamed(context, '/dash');
+            } else {
+              //error snackbar
+            }
+          });
           isLoadibg = false;
           setState(() {});
-          Navigator.pushNamed(context, '/dash');
-        });
       },
     );
     return buttonlogging;
@@ -137,7 +141,20 @@ class _LoginScreenState extends State<LoginScreen> {
     return txtregister;
   }
 
+  
+
   Widget _buildMobileContent() {
+    final txtEmail = TextFormField(
+    controller: emailtxt,
+    decoration: const InputDecoration(
+        label: Text("EMAIL USER"), border: OutlineInputBorder()),
+  );
+
+  final txtPass = TextFormField(
+    controller: passwordtxt,
+    decoration: const InputDecoration(
+        label: Text("Password"), border: OutlineInputBorder()),
+  );
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -184,6 +201,17 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   Widget _buildDesktopContent() {
+    final txtEmail = TextFormField(
+    controller: emailtxt,
+    decoration: const InputDecoration(
+        label: Text("EMAIL USER"), border: OutlineInputBorder()),
+  );
+
+  final txtPass = TextFormField(
+    controller: passwordtxt,
+    decoration: const InputDecoration(
+        label: Text("Password"), border: OutlineInputBorder()),
+  );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -244,6 +272,17 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Widget _buildhorizontalContent() {
+    final txtEmail = TextFormField(
+    controller: emailtxt,
+    decoration: const InputDecoration(
+        label: Text("EMAIL USER"), border: OutlineInputBorder()),
+  );
+
+  final txtPass = TextFormField(
+    controller: passwordtxt,
+    decoration: const InputDecoration(
+        label: Text("Password"), border: OutlineInputBorder()),
+  );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

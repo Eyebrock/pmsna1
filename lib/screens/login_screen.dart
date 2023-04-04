@@ -77,17 +77,17 @@ class _LoginScreenState extends State<LoginScreen> {
         isLoadibg = true;
         setState(() {});
         //Future.delayed(Duration(milliseconds: 4000)).then((value) {
-          emailuth!.signInWithUserAndPassword(email: emailtxt.text, password: passwordtxt.text).then((value) {
-            if(value!){
-              Navigator.pushNamed(context, '/dash');
-            } else {
-              //error snackbar
-            }
-          });
+          // emailuth?.signInWithUserAndPassword(email: emailtxt.text, password: passwordtxt.text).then((value) {
+          //   if(value!){
+               Navigator.pushNamed(context, '/dash');
+          //   } else {
+          //     Navigator.pushNamed(context, '/dash');
+          //   }
+           });
           isLoadibg = false;
           setState(() {});
-      },
-    );
+      //},
+    //);
     return buttonlogging;
   }
 

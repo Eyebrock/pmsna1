@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ThemeProvider(context, idtema)),
         ChangeNotifierProvider(create: (_) => FlagosProvider())
       ],
-      child: PMSNApp(),
+      child: const PMSNApp(),
     );
   }
 }

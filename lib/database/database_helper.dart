@@ -5,11 +5,12 @@ import 'package:pmsna1/models/event_model.dart';
 import 'package:pmsna1/routes.dart';
 import 'package:sqflite/sqflite.dart';
 
+import '../models/popular_model.dart';
 import '../models/post_model.dart';
 
 class DatabaseHelper {
   static final nameDB = 'SOCIALDB';
-  static final versionDB = 3;
+  static final versionDB = 4;
 
   static Database? _database;
   Future<Database> get database async {
@@ -42,8 +43,25 @@ class DatabaseHelper {
       completado INTEGER
     )''';
 
+    String query3 = '''
+      CREATE TABLE tblPopularFav (
+        backdrop_path TEXT,
+        id INTEGER,
+        original_language TEXT,
+        original_title TEXT,
+        overview TEXT,
+        popularity REAL,
+        poster_path TEXT,
+        release_date TEXT,
+        title TEXT,
+        vote_average REAL,
+        vote_count INTEGER
+      );
+    ''';
+
     db.execute(query);
     db.execute(query2);
+    db.execute(query3);
   }
 
   //EVENTOS PARA LA TABLA DE POSTS
@@ -69,11 +87,6 @@ class DatabaseHelper {
     return result.map((post) => PostModel.fromMap(post)).toList();
   }
 
-
-
-
-
-
   //EVENTOS PARA LA TABLA DE EVENTOS
   Future<int> INSERT_EVENTO(Map<String, dynamic> data) async {
     var conexion = await database;
@@ -96,5 +109,47 @@ class DatabaseHelper {
     var conexion = await database;
     var result = await conexion.query('eventos');
     return result.map((post) => EventModel.fromMap(post)).toList();
+  }
+
+  Future<List<PopularModel>> getAllPopular() async {
+    var conexion = await database;
+    var result = await conexion.query('tblPopularFav');
+    return result.map((popular) => PopularModel.fromMap(popular)).toList();
+  }
+
+  Future<bool> searchPopular(int id_popular) async {
+    var conexion = await database;
+    var query = "SELECT * FROM tblPopularFav where id=?";
+    var result = await conexion.rawQuery(query, [id_popular]);
+    if (result != null && result.isNotEmpty) {
+      return true;
+    }
+    return false;
+  }
+  //////PELICULAS
+  
+  Future<int> INSERTg(String tblName, Map<String, dynamic> data) async {
+    var conexion = await database;
+    return await conexion.insert(tblName, data);
+  }
+
+  Future<int> UPDATEg(
+      String tblName, Map<String, dynamic> data, String idColumnName) async {
+    var conexion = await database;
+    return await conexion.update(
+      tblName,
+      data,
+      where: '$idColumnName = ?',
+      whereArgs: [data[idColumnName]],
+    );
+  }
+
+  Future<int> DELETEg(String tblName, int id, String idColumnName) async {
+    var conexion = await database;
+    return await conexion.delete(
+      tblName,
+      where: '$idColumnName = ?',
+      whereArgs: [id],
+    );
   }
 }

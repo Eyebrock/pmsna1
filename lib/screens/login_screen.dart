@@ -18,22 +18,19 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoadibg = false;
 
-  Emailuth? emailuth;
+  Emailuth emailAuth= Emailuth();
 
-  TextEditingController emailtxt = TextEditingController();
-  TextEditingController passwordtxt = TextEditingController();
+  TextEditingController?emailtxt = TextEditingController();
+  TextEditingController? passwordtxt = TextEditingController();
 
   
   
 
-  final horizontalSpace = SizedBox(
+  final horizontalSpace = const SizedBox(
     height: 10,
   );
 
-  final googlebtn = SocialLoginButton(
-    buttonType: SocialLoginButtonType.twitter,
-    onPressed: () {},
-  );
+ 
 
   final imageLogo = Image.asset(
     'assets/logoitc.png',
@@ -42,9 +39,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Padding txtregister = botonregistro(context);
+    // Padding txtregister = botonregistro(context);
 
-    SocialLoginButton buttonlogging = botonlogin(context);
+    // SocialLoginButton buttonlogging = botonlogin(context);
+
+    final txtEmail = TextFormField(
+    controller: emailtxt,
+    decoration: const InputDecoration(
+        label: Text("EMAIL USER"), border: OutlineInputBorder()),
+  );
+
+  final txtPass = TextFormField(
+    controller: passwordtxt,
+    decoration: const InputDecoration(
+        label: Text("Password"), border: OutlineInputBorder()),
+  );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -59,9 +68,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Responsive(
-                  tablet: _buildhorizontalContent(),
-                  mobile: _buildMobileContent(),
-                  desktop: _buildDesktopContent()),
+                  tablet: _buildhorizontalContent(txtEmail, txtPass),
+                  mobile: _buildMobileContent(txtEmail, txtPass),
+                  desktop: _buildDesktopContent(txtEmail, txtPass)),
             ),
           ),
           isLoadibg ? const LoadingModalWidget() : Container()
@@ -76,18 +85,20 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {
         isLoadibg = true;
         setState(() {});
-        //Future.delayed(Duration(milliseconds: 4000)).then((value) {
-          // emailuth?.signInWithUserAndPassword(email: emailtxt.text, password: passwordtxt.text).then((value) {
-          //   if(value!){
+        print(emailtxt!.text);
+        print(passwordtxt!.text);
+           emailAuth.signInWithEmailAndPassword(email: emailtxt!.text, password: passwordtxt!.text).then((value){
+             if(value){
                Navigator.pushNamed(context, '/dash');
-          //   } else {
-          //     Navigator.pushNamed(context, '/dash');
-          //   }
+               isLoadibg=false;
+             } else {
+                isLoadibg=false;
+                const SnackBar(content: Text('Verifica tus credenciales'),);
+            }
            });
-          isLoadibg = false;
-          setState(() {});
-      //},
-    //);
+           isLoadibg=false;
+      },
+    );
     return buttonlogging;
   }
 
@@ -97,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
       foregroundColor: Colors.white,
       onPressed: () => Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const NewScreen())),
-      label: Text('Theme Settings'),
+      label: const Text('Theme Settings'),
       heroTag: 'GFG tag',
     );
     return themechange;
@@ -108,8 +119,8 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {
         Navigator.pushNamed(context, '/Calendar');
       },
-      backgroundColor: Color.fromARGB(255, 2, 47, 84),
-      child: Icon(Icons.calendar_today),
+      backgroundColor: const Color.fromARGB(255, 2, 47, 84),
+      child: const Icon(Icons.calendar_today),
     );
     return calendarview;
   }
@@ -132,7 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
         onPressed: () {
           Navigator.pushNamed(context, '/register');
         },
-        child: Text(
+        child: const Text(
           'crear una cuenta',
           style: TextStyle(fontSize: 18, decoration: TextDecoration.underline),
         ),
@@ -143,18 +154,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   
 
-  Widget _buildMobileContent() {
-    final txtEmail = TextFormField(
-    controller: emailtxt,
-    decoration: const InputDecoration(
-        label: Text("EMAIL USER"), border: OutlineInputBorder()),
-  );
+  
 
-  final txtPass = TextFormField(
-    controller: passwordtxt,
-    decoration: const InputDecoration(
-        label: Text("Password"), border: OutlineInputBorder()),
-  );
+  Widget _buildMobileContent(TextFormField txtEmail,TextFormField txtPass) {
+    
   return Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
@@ -163,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Align(
           alignment: Alignment.topRight,
           child: Container(
-            margin: EdgeInsets.symmetric(vertical: 50),
+            margin: const EdgeInsets.symmetric(vertical: 50),
             child: btncalendar(context),
           ),
         ),
@@ -176,19 +179,18 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               txtEmail,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               txtPass,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               botonlogin(context),
-              SizedBox(height: 10),
-              googlebtn,
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
+              const SizedBox(height: 10),
               btnonboard(context),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               botonregistro(context),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               btnthemech(context)
             ],
           ),
@@ -200,7 +202,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
 
-  Widget _buildDesktopContent() {
+  Widget _buildDesktopContent(TextFormField txtEmail,TextFormField txtPass) {
     final txtEmail = TextFormField(
     controller: emailtxt,
     decoration: const InputDecoration(
@@ -220,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
           child: Align(
             alignment: Alignment.topRight,
             child: Container(
-              margin: EdgeInsets.symmetric(vertical: 50),
+              margin: const EdgeInsets.symmetric(vertical: 50),
               child: btncalendar(context),
             ),
           ),
@@ -255,7 +257,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontalSpace,
                   botonlogin(context),
                   horizontalSpace,
-                  googlebtn,
                   horizontalSpace,
                   botonregistro(context),
                   horizontalSpace,
@@ -271,7 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildhorizontalContent() {
+  Widget _buildhorizontalContent(TextFormField txtEmail,TextFormField txtPass) {
     final txtEmail = TextFormField(
     controller: emailtxt,
     decoration: const InputDecoration(
@@ -308,7 +309,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         horizontalSpace,
                         txtPass,
                         horizontalSpace,
-                        googlebtn,
                         horizontalSpace,
                         botonlogin(context),
                         horizontalSpace,
@@ -330,10 +330,10 @@ class _LoginScreenState extends State<LoginScreen> {
             alignment: Alignment.center,
             child: Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 imageLogo,
-                SizedBox(height: 20),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
+                const SizedBox(height: 20),
                 btncalendar(context),
               ],
             ),
@@ -393,7 +393,7 @@ class _NewScreenState extends State<NewScreen> {
     return themechange;
   }
 
-  final horizontalSpace = SizedBox(
+  final horizontalSpace = const SizedBox(
     height: 10,
   );
 

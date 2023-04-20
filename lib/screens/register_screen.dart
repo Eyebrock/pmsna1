@@ -18,7 +18,7 @@ class _RegisterscreenState extends State<Registerscreen> {
   TextEditingController emailtxt = TextEditingController();
   TextEditingController passwordtxt = TextEditingController();
 
-  Emailuth? emailauth;
+  Emailuth emailauth = Emailuth();
   
   File? _image;
 
@@ -132,7 +132,7 @@ class _RegisterscreenState extends State<Registerscreen> {
                         onPressed: () {
                           // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
-                             emailauth?.createUserWithEmailAndPassword(email: emailtxt.text, password: passwordtxt.text);
+                             emailauth?.createUserWithEmailAndPassword(email: emailtxt.text.toString(), password: passwordtxt.text.toString());
                             // If the form is valid, display a snackbar. In the real world,
                             // you'd often call a server or save the information in a database.
                             ScaffoldMessenger.of(context).showSnackBar(

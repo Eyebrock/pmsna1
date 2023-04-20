@@ -9,11 +9,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   final idtema= sharedPreferences.getInt('id_tema') ?? 0;
   runApp(MyApp(idtema: idtema));
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await Firebase.initializeApp();
 }
 
 

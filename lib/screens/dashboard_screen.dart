@@ -5,6 +5,10 @@ import 'package:pmsna1/screens/list_post.dart';
 import 'package:provider/provider.dart';
 import 'package:pmsna1/settings/styles_settings.dart';
 
+import '../firebase/facebook_autjentication.dart';
+import '../firebase/google_authentication.dart';
+import '../models/user_model.dart';
+
 
 class DashboardScreen extends StatefulWidget {
 
@@ -16,10 +20,17 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
   bool isDarkModeEnabled = false;
+  GoogleAuth googleAuth= GoogleAuth();
+  FaceAuth faceAuth= FaceAuth();
+  UserModel? user;
 
   @override
   Widget build(BuildContext context) {
+    if(ModalRoute.of(context)!.settings.arguments!=null){
+      user = ModalRoute.of(context)!.settings.arguments as UserModel;
+    }
     ThemeProvider theme= Provider.of<ThemeProvider>(context);
+    
     return Scaffold(
       appBar: AppBar(
         title: Text('Social ITC SMOOCH'),
@@ -39,13 +50,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
       drawer: Drawer(
         child: ListView(
           children: [
-            const UserAccountsDrawerHeader(
-              currentAccountPicture:CircleAvatar(
-                backgroundImage: NetworkImage('https://www.seekpng.com/png/full/966-9665493_my-profile-icon-blank-profile-image-circle.png'),
-              ),
-              accountName:Text('Eyebrock'),
-              accountEmail: Text('eyebrock2913@gmail.com')
-              ),
+             UserAccountsDrawerHeader(
+              currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(user!.photoUrl.toString()),
+                ),
+                accountName: Text(user!.name.toString()),
+                accountEmail: Text(user!.email.toString())),
               ListTile(
                 onTap: (){},
                 title: Text('Practica 1'),
@@ -69,6 +79,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   setState(() {});
                 },
               ),
+              ListTile(
+              onTap: (){
+                try{
+                  googleAuth.signOutWithGoogle().then((value){
+                    if(value){
+                      Navigator.pushNamed(context, '/login');
+                    }else{
+                      print('no');
+                    }
+                  });
+                   faceAuth.signOut().then((value){
+                     if(value){
+                       Navigator.pushNamed(context, '/login');
+                     }else{
+                       print('no');
+                     }
+                   });
+                }catch(e){
+                  print(e);
+                }
+              },
+              title: const Text('Logout'),
+              leading: const Icon(Icons.logout),
+            ),
           ],
         ),
       ),

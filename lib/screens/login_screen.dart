@@ -8,6 +8,9 @@ import 'package:provider/provider.dart';
 import 'package:social_login_buttons/social_login_buttons.dart';
 import 'package:pmsna1/provider/theme_provider.dart';
 
+import '../firebase/facebook_autjentication.dart';
+import '../firebase/google_authentication.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -18,19 +21,16 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   bool isLoadibg = false;
 
-  Emailuth emailAuth= Emailuth();
+  Emailuth emailAuth = Emailuth();
+  GoogleAuth googleAuth = GoogleAuth();
+  FaceAuth faceAuth = FaceAuth();
 
-  TextEditingController?emailtxt = TextEditingController();
+  TextEditingController? emailtxt = TextEditingController();
   TextEditingController? passwordtxt = TextEditingController();
-
-  
-  
 
   final horizontalSpace = const SizedBox(
     height: 10,
   );
-
- 
 
   final imageLogo = Image.asset(
     'assets/logoitc.png',
@@ -40,20 +40,39 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     // Padding txtregister = botonregistro(context);
-
     // SocialLoginButton buttonlogging = botonlogin(context);
 
-    final txtEmail = TextFormField(
-    controller: emailtxt,
-    decoration: const InputDecoration(
-        label: Text("EMAIL USER"), border: OutlineInputBorder()),
-  );
+    final googlebtn = SocialLoginButton(
+      buttonType: SocialLoginButtonType.google,
+      onPressed: () async {
+        isLoadibg = true;
+        setState(() {});
+        await googleAuth.signInWithGoogle().then((value) {
+          if (value.name != null) {
+            isLoadibg = false;
+            Navigator.pushNamed(context, '/dash', arguments: value);
+          } else {
+            isLoadibg = false;
+            setState(() {});
+            SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
+        });
+      },
+    );
 
-  final txtPass = TextFormField(
-    controller: passwordtxt,
-    decoration: const InputDecoration(
-        label: Text("Password"), border: OutlineInputBorder()),
-  );
+    final txtEmail = TextFormField(
+      controller: emailtxt,
+      decoration: const InputDecoration(
+          label: Text("EMAIL USER"), border: OutlineInputBorder()),
+    );
+
+    final txtPass = TextFormField(
+      controller: passwordtxt,
+      decoration: const InputDecoration(
+          label: Text("Password"), border: OutlineInputBorder()),
+    );
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -68,9 +87,9 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Responsive(
-                  tablet: _buildhorizontalContent(txtEmail, txtPass),
-                  mobile: _buildMobileContent(txtEmail, txtPass),
-                  desktop: _buildDesktopContent(txtEmail, txtPass)),
+                  tablet: _buildhorizontalContent(txtEmail, txtPass, googlebtn),
+                  mobile: _buildMobileContent(txtEmail, txtPass, googlebtn),
+                  desktop: _buildDesktopContent(txtEmail, txtPass, googlebtn)),
             ),
           ),
           isLoadibg ? const LoadingModalWidget() : Container()
@@ -87,16 +106,21 @@ class _LoginScreenState extends State<LoginScreen> {
         setState(() {});
         print(emailtxt!.text);
         print(passwordtxt!.text);
-           emailAuth.signInWithEmailAndPassword(email: emailtxt!.text, password: passwordtxt!.text).then((value){
-             if(value){
-               Navigator.pushNamed(context, '/dash');
-               isLoadibg=false;
-             } else {
-                isLoadibg=false;
-                const SnackBar(content: Text('Verifica tus credenciales'),);
-            }
-           });
-           isLoadibg=false;
+        emailAuth
+            .signInWithEmailAndPassword(
+                email: emailtxt!.text, password: passwordtxt!.text)
+            .then((value) {
+          if (value) {
+            Navigator.pushNamed(context, '/dash');
+            isLoadibg = false;
+          } else {
+            isLoadibg = false;
+            const SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
+        });
+        isLoadibg = false;
       },
     );
     return buttonlogging;
@@ -152,68 +176,88 @@ class _LoginScreenState extends State<LoginScreen> {
     return txtregister;
   }
 
-  
+  Widget _buildFacebookButton() {
+    return SocialLoginButton(
+      buttonType: SocialLoginButtonType.facebook,
+      onPressed: () async {
+        isLoadibg = true;
+        setState(() {});
+        faceAuth.signInWithFacebook().then((value) {
+          if (value.name != null) {
+            Navigator.pushNamed(context, '/dash', arguments: value);
+            isLoadibg = false;
+          } else {
+            isLoadibg = false;
+            SnackBar(
+              content: Text('Verifica tus credenciales'),
+            );
+          }
+          setState(() {});
+        });
+      },
+    );
+  }
 
-  
-
-  Widget _buildMobileContent(TextFormField txtEmail,TextFormField txtPass) {
-    
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      Expanded(
-        flex: 0,
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 50),
-            child: btncalendar(context),
+  Widget _buildMobileContent(TextFormField txtEmail, TextFormField txtPass,
+      SocialLoginButton googlebtn) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          flex: 0,
+          child: Align(
+            alignment: Alignment.topRight,
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 50),
+              child: btncalendar(context),
+            ),
           ),
         ),
-      ),
-      imageLogo,
-      Expanded(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const SizedBox(height: 10),
-              txtEmail,
-              const SizedBox(height: 10),
-              txtPass,
-              const SizedBox(height: 10),
-              botonlogin(context),
-              const SizedBox(height: 10),
-              const SizedBox(height: 10),
-              btnonboard(context),
-              const SizedBox(height: 10),
-              botonregistro(context),
-              const SizedBox(height: 10),
-              btnthemech(context)
-            ],
+        imageLogo,
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 10),
+                txtEmail,
+                const SizedBox(height: 10),
+                txtPass,
+                const SizedBox(height: 10),
+                botonlogin(context),
+                const SizedBox(height: 10),
+                googlebtn,
+                const SizedBox(height: 10),
+                _buildFacebookButton(),
+                const SizedBox(height: 10),
+                btnonboard(context),
+                const SizedBox(height: 10),
+                botonregistro(context),
+                const SizedBox(height: 10),
+                btnthemech(context)
+              ],
+            ),
           ),
-        ),
-      )
-    ],
-  );
-}
+        )
+      ],
+    );
+  }
 
-
-
-  Widget _buildDesktopContent(TextFormField txtEmail,TextFormField txtPass) {
+  Widget _buildDesktopContent(TextFormField txtEmail, TextFormField txtPass,
+      SocialLoginButton googlebtn) {
     final txtEmail = TextFormField(
-    controller: emailtxt,
-    decoration: const InputDecoration(
-        label: Text("EMAIL USER"), border: OutlineInputBorder()),
-  );
+      controller: emailtxt,
+      decoration: const InputDecoration(
+          label: Text("EMAIL USER"), border: OutlineInputBorder()),
+    );
 
-  final txtPass = TextFormField(
-    controller: passwordtxt,
-    decoration: const InputDecoration(
-        label: Text("Password"), border: OutlineInputBorder()),
-  );
+    final txtPass = TextFormField(
+      controller: passwordtxt,
+      decoration: const InputDecoration(
+          label: Text("Password"), border: OutlineInputBorder()),
+    );
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -257,6 +301,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontalSpace,
                   botonlogin(context),
                   horizontalSpace,
+                  googlebtn,
+                  horizontalSpace,
+                  _buildFacebookButton(),
                   horizontalSpace,
                   botonregistro(context),
                   horizontalSpace,
@@ -272,18 +319,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  Widget _buildhorizontalContent(TextFormField txtEmail,TextFormField txtPass) {
+  Widget _buildhorizontalContent(TextFormField txtEmail, TextFormField txtPass,
+      SocialLoginButton googlebtn) {
     final txtEmail = TextFormField(
-    controller: emailtxt,
-    decoration: const InputDecoration(
-        label: Text("EMAIL USER"), border: OutlineInputBorder()),
-  );
+      controller: emailtxt,
+      decoration: const InputDecoration(
+          label: Text("EMAIL USER"), border: OutlineInputBorder()),
+    );
 
-  final txtPass = TextFormField(
-    controller: passwordtxt,
-    decoration: const InputDecoration(
-        label: Text("Password"), border: OutlineInputBorder()),
-  );
+    final txtPass = TextFormField(
+      controller: passwordtxt,
+      decoration: const InputDecoration(
+          label: Text("Password"), border: OutlineInputBorder()),
+    );
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -309,6 +357,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         horizontalSpace,
                         txtPass,
                         horizontalSpace,
+                        googlebtn,
+                        horizontalSpace,
+                        _buildFacebookButton(),
                         horizontalSpace,
                         botonlogin(context),
                         horizontalSpace,

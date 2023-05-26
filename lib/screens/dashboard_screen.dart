@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:day_night_switcher/day_night_switcher.dart';
 import 'package:pmsna1/provider/theme_provider.dart';
+import 'package:pmsna1/screens/list_favourites.dart';
 import 'package:pmsna1/screens/list_post.dart';
 import 'package:provider/provider.dart';
 import 'package:pmsna1/settings/styles_settings.dart';
@@ -35,7 +36,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       appBar: AppBar(
         title: Text('Social ITC SMOOCH'),
       ),
-      body: ListPost(),
+      body: const ListFvouritesCloud(), //ListPost()
       floatingActionButton: FloatingActionButton.extended(
         onPressed: (){
           Navigator.pushNamed(context, '/add').then((value){
@@ -67,6 +68,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 onTap: () => Navigator.pushNamed(context, '/popular'),
                 title: Text('API videos'),
                 leading: Icon(Icons.movie),
+                trailing: Icon(Icons.chevron_right),
+              ),
+              ListTile(
+                onTap: () => Navigator.pushNamed(context, '/map'),
+                title: Text('SEE A MAP'),
+                leading: Icon(Icons.map),
                 trailing: Icon(Icons.chevron_right),
               ),
               DayNightSwitcher(

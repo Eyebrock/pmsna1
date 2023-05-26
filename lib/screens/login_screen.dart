@@ -104,8 +104,8 @@ class _LoginScreenState extends State<LoginScreen> {
       onPressed: () {
         isLoadibg = true;
         setState(() {});
-        print(emailtxt!.text);
-        print(passwordtxt!.text);
+        // print(emailtxt!.text);
+        // print(passwordtxt!.text);
         emailAuth
             .signInWithEmailAndPassword(
                 email: emailtxt!.text, password: passwordtxt!.text)
